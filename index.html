@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="主立红的空间设计作品集。从人的真实需求出发，探索空间、光影、材质与情感之间的联系。">
+  <meta name="theme-color" content="#fefefe">
+  <title>主立红 — Reality, By Design.</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (!location.hash || location.hash === '#home') window.scrollTo(0, 0);
+  </script>
+  <script type="module" src="./cursor.js"></script>
+  <script type="module" src="./data.js"></script>
+  <script type="module" src="./main.js"></script>
+</head>
+<body class="is-loading">
+  <a class="skip-link" href="#main">跳至正文</a>
+  <div class="loader" aria-hidden="true">
+    <div class="loader-top"><span>LIHONG<sup>®</sup></span><span><span id="loader-progress">0%</span>/55%</span></div>
+    <div class="loader-center"><strong id="loader-count">0%</strong></div>
+    <div class="loader-line"><i></i></div>
+  </div>
+  <div class="page-grid" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="site-grid" aria-hidden="true">
+    <i></i><i></i><i></i><i></i>
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="主立红作品集首页">LIHONG<sup>®</sup></a>
+    <nav class="main-nav" id="main-nav" aria-label="主导航">
+      <a href="#works">作品 <sup>06</sup></a>
+      <a href="#about">关于</a>
+      <a href="#experience">经历</a>
+      <a href="#contact">联系 ↗</a>
+    </nav>
+    <div class="header-meta"><span>LOCAL TIME</span><time id="local-time">CN 00:00:00</time></div>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav"><span>MENU</span><i></i></button>
+  </header>
+
+  <nav class="page-tabs" aria-label="页面快捷导航">
+    <a href="#about">ABOUT</a>
+    <a href="#works">WORKS</a>
+    <a href="#visual-notes">VISUAL</a>
+    <a href="#experience">EXPERIENCE</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+
+  <main id="main">
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero-grid-extra" aria-hidden="true">
+        <i class="hero-hline hero-hline-a"></i><i class="hero-hline hero-hline-b"></i>
+        <i class="hero-vline hero-vline-a"></i><i class="hero-vline hero-vline-b"></i><i class="hero-vline hero-vline-c"></i><i class="hero-vline hero-vline-d"></i>
+        <span class="hero-cross hero-cross-a"></span><span class="hero-cross hero-cross-b"></span><span class="hero-cross hero-cross-c"></span><span class="hero-cross hero-cross-d"></span>
+      </div>
+
+      <div class="hero-heading">
+        <h1 id="hero-title">WELCOME TO MY WORLD</h1>
+      </div>
+
+      <div class="hero-visual" aria-label="从土地与根系中生长的空间">
+        <div class="hero-object">
+          <img class="hero-island" src="assets/img/hero-island.png" alt="漂浮的岩石、青苔草地与红色花朵">
+        </div>
+        <span class="hero-scan hero-scan-a" aria-hidden="true"></span>
+        <span class="hero-scan hero-scan-b" aria-hidden="true"></span>
+        <span class="hero-scan hero-scan-c" aria-hidden="true"></span>
+      </div>
+
+      <div class="hero-directory" aria-label="首屏信息">
+        <a class="hero-note hero-callout hero-callout-about" href="#about"><span class="hero-note-copy">FROM DEEP ROOTS, CREATIVITY<br>DRAWS ITS STRENGTH</span><span class="hero-leader" aria-hidden="true"></span></a>
+        <a class="hero-note hero-callout hero-callout-works is-right" href="#works"><span class="hero-note-copy">WHERE IMAGINATION<br>BRANCHES INTO A<br>LANDSCAPE OF ENDLESS<br>DIVERSITY</span><span class="hero-leader" aria-hidden="true"></span></a>
+        <a class="hero-note hero-callout hero-callout-experience is-right" href="#experience"><span class="hero-note-copy">FOUNDATION<br>BROUGHT FOR<br>GROWTH</span><span class="hero-leader" aria-hidden="true"></span></a>
+
+        <aside class="hero-brand-card" aria-label="主立红名字释义">
+          <div class="hero-card-head"><strong>LIHONG</strong><span>/26</span></div>
+          <dl><div><dt>LI</dt><dd>(TO STAND)</dd></div><div><dt>HONG</dt><dd>(RED)</dd></div></dl>
+          <p>→ STAND IN YOUR OWN COLOR</p>
+        </aside>
+      </div>
+
+      <a class="scroll-cue hero-scroll" href="#about" aria-label="进入下一页"><span>WELCOME</span><i>↓</i></a>
+    </section>
+
+    <section class="about section-pad" id="about" aria-labelledby="about-title">
+      <div class="section-tag reveal"><span>/01</span><span>NOT A STUDIO — JUST ME</span></div>
+      <div class="about-title-row reveal"><h2 id="about-title">NICE TO MEET YOU.</h2><p>好奇看世界，认真做设计。<br>保持感受，也保持行动。</p></div>
+      <div class="about-grid">
+        <figure class="portrait reveal"><img src="assets/img/portrait.jpg" alt="主立红的个人照片"><figcaption><span>ME, OFF DUTY.</span><span>SHANDONG / CN</span></figcaption></figure>
+        <div class="about-copy reveal"><p class="about-lead">Hi！我是主立红，<span class="annotate">关于我<svg class="annotate-arrow" viewBox="0 0 46 38" aria-hidden="true"><path pathLength="1" d="M40 4 C30 14 20 20 8 24 M14 18 C11 21 9 24 8 24 C11 25 14 25 17 26" /></svg></span></p><div class="about-cards" aria-label="个人优势"><div class="card" tabindex="0"><div class="card-inner"><div class="card-face card-front"><span class="card-num">01</span><strong>执行力与抗压</strong><em>EXECUTION / RESILIENCE</em><span class="card-hint">HOVER / TAP ↻</span></div><div class="card-face card-back"><p>拥有丰富社会实践与干部经历，具备奉献精神，习惯多线程工作模式，能在高压下保持高效输出，确保任务按质交付。</p></div></div></div><div class="card" tabindex="0"><div class="card-inner"><div class="card-face card-front"><span class="card-num">02</span><strong>责任心强</strong><em>RESPONSIBILITY</em><span class="card-hint">HOVER / TAP ↻</span></div><div class="card-face card-back"><p>多次担任小组组长，有出色的组织协调与资源整合能力，服务意识与责任感强。</p></div></div></div><div class="card" tabindex="0"><div class="card-inner"><div class="card-face card-front"><span class="card-num">03</span><strong>办公技能</strong><em>OFFICE SKILLS</em><span class="card-hint">HOVER / TAP ↻</span></div><div class="card-face card-back"><p>精通 Office 软件，擅长 PPT 方案制作与美化，具备扎实的文档撰写与数据整理能力。</p></div></div></div><div class="card" tabindex="0"><div class="card-inner"><div class="card-face card-front"><span class="card-num">04</span><strong>专业扎实</strong><em>SOLID MAJOR</em><span class="card-hint">HOVER / TAP ↻</span></div><div class="card-face card-back"><p>环境设计专业应届生，理论基础扎实，熟练掌握设计软件，通晓从方案到施工图的全流程，立志深耕室内设计领域。</p></div></div></div></div><div class="about-actions"><a class="text-link" href="assets/lihong-portfolio.pdf" target="_blank" rel="noreferrer">原始作品集 PDF ↗</a></div></div>
+        <div class="about-facts reveal"><div><span>EDUCATION</span><strong>哈尔滨商业大学</strong><small>环境设计 / 本科 / 2022—2026</small></div><div><span>ACADEMIC</span><strong>84 / 100</strong><small>学业成绩 / 前 30% / CET-4</small></div><div><span>TOOLKIT</span><strong>从想法到表达</strong><small>AutoCAD / SketchUp / Enscape<br>Photoshop / Canva / 剪映</small></div></div>
+      </div>
+    </section>
+
+    <section class="intro section-pad" id="intro" aria-labelledby="intro-title">
+      <div class="section-tag reveal"><span>/02</span><span>DESIGN PHILOSOPHY</span></div>
+      <h2 class="intro-title reveal" id="intro-title">让想象扎根，<br>让空间<span>生长。</span></h2>
+      <div class="intro-grid">
+        <p class="intro-lead reveal">Where imagination branches into a landscape of endless possibilities.</p>
+        <div class="intro-copy reveal"><p>我相信，空间不只是被观看的对象，更是人与生活发生关系的地方。</p><p>从人的行为与情绪出发，我把功能、光线和材质组织成可感知的故事，让每一处设计既有美的表达，也有真实的使用理由。</p></div>
+        <span class="intro-mark reveal" aria-hidden="true">✳</span>
+      </div>
+    </section>
+
+    <section class="works section-pad" id="works" aria-labelledby="works-title">
+      <div class="section-tag reveal"><span>/03</span><span>SELECTED WORKS · 2025—2026</span></div>
+      <div class="works-heading reveal"><h2 id="works-title">SOME PROJECT<br>EXAMPLES</h2><p>六个空间，六种与生活相遇的方式。<br><span>( HAVE FUN EXPLORING )</span></p></div>
+      <div class="works-layout">
+        <div class="work-list" id="work-list" aria-label="六个精选设计项目"></div>
+        <aside class="work-preview reveal" aria-label="当前作品预览">
+          <div class="preview-meta"><span id="preview-number">01 / 06</span><span>SELECTED PREVIEW</span></div>
+          <a class="preview-link" id="preview-link" href="./project.html?work=01" aria-label="查看中华小厨作品详情">
+            <img id="preview-image" src="assets/img/extracted/project01-cover.jpg" alt="中华小厨项目封面预览">
+            <span class="preview-open">VIEW PROJECT ↗</span>
+          </a>
+          <div class="preview-caption"><strong id="preview-title">中华小厨</strong><span id="preview-category">INTERIOR SPACE</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="visual-notes" id="visual-notes" aria-labelledby="visual-title">
+      <div class="visual-inner">
+        <div class="visual-topbar"><span class="visual-mark">LIHONG<sup>®</sup></span><span>VISUAL ARCHIVE / 2024—2026</span><span>09 FRAMES</span></div>
+        <header class="visual-intro reveal">
+          <div class="visual-kicker"><span>[ LENS &amp; FRAME ]</span><span>PHOTOGRAPHY / POSTER</span></div>
+          <div class="visual-title-row"><h2 id="visual-title">镜头与画面</h2><p>海报与摄影，是空间之外的另一组观察。<br>点击任意画面，查看完整作品。</p></div>
+        </header>
+
+        <div class="visual-grid reveal" id="visual-grid" aria-label="镜头与画面作品画廊"></div>
+        <div class="visual-end"><span>END OF VISUAL ARCHIVE</span><span>AUTO PLAY / CLICK A FRAME TO OPEN</span></div>
+      </div>
+    </section>
+
+    <dialog class="lens-dialog" id="lens-dialog" aria-labelledby="lens-title">
+      <button class="lens-close" id="lens-close" type="button" aria-label="关闭作品预览">×</button>
+      <button class="lens-nav lens-prev" id="lens-prev" type="button" aria-label="上一件作品">←</button>
+      <div class="lens-panel">
+        <div class="lens-image-wrap"><img id="lens-image" src="assets/img/extracted/visual-01-bridge.jpg" alt="夜色中的桥与倒影"></div>
+        <div class="lens-info"><span class="lens-category" id="lens-category">PHOTOGRAPHY</span><h2 id="lens-title">夜色 · 桥与倒影</h2><p id="lens-description">夜色中的铁路桥，灯光与水面倒影形成对称的节奏。</p><button class="lens-next-frame" id="lens-next-frame" type="button">NEXT FRAME <span>→</span></button></div>
+      </div>
+      <button class="lens-nav lens-next" id="lens-next" type="button" aria-label="下一件作品">→</button>
+      <div class="lens-counter" id="lens-counter">01 / 09 · USE ← → KEYS</div>
+    </dialog>
+
+    <section class="experience section-pad" id="experience" aria-labelledby="experience-title">
+      <div class="section-tag reveal"><span>/04</span><span>EXPERIENCE & PRACTICE</span></div>
+      <div class="section-heading reveal"><div><h2 id="experience-title">在真实任务中生长</h2></div><p>设计、教学与项目统筹，<br>都是理解人与解决问题的方式。</p></div>
+      <div class="experience-list">
+        <article class="experience-item reveal"><div class="experience-date"><time>2026.01 — 2026.09</time><span>CHONGQING / CN</span></div><div><h3>重庆启智分科技有限公司</h3><p class="experience-role">数学讲师</p></div><div class="experience-description"><p>独立负责线上课堂全流程，依据学员知识薄弱点定制单节课方案，累计交付 50+ 课时。</p><p>长期跟进学员状态，输出学情反馈并迭代课程内容，累计带教 3 名长期学员，其中 2 名完成续课。</p></div><span class="experience-index">01</span></article>
+        <article class="experience-item reveal"><div class="experience-date"><time>2025.04 — 2025.05</time><span>PROJECT LEAD</span></div><div><h3>白族非遗文化展馆</h3><p class="experience-role">项目组长</p></div><div class="experience-description"><p>带领 3 人小组完成从调研到方案设计的全流程，制定时间表并推进落地执行。</p><p>负责资料搜集、展陈概念提炼与跨模块协调，统一组员设计风格并把控最终交付质量。</p></div><span class="experience-index">02</span></article>
+        <article class="experience-item reveal"><div class="experience-date"><time>2025.01</time><span>INTERNSHIP</span></div><div><h3>同轩装修装饰工程有限公司</h3><p class="experience-role">室内设计师助理</p></div><div class="experience-description"><p>参与多个客户项目的方案设计，结合客户需求提供创意与建议，推动方案获得认可。</p><p>运用 SketchUp、Enscape 与 CAD 完成建模和效果图制作，累计出图 100+ 张，并跟进设计与施工衔接。</p></div><span class="experience-index">03</span></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="contact section-pad" id="contact" aria-labelledby="contact-title">
+    <div class="section-tag reveal"><span>/05</span><span>REACH OUT TO ME</span></div>
+    <h2 class="reveal" id="contact-title">LET’S SHAPE<br><span>REALITY.</span></h2>
+    <div class="contact-intro reveal"><p>有一个空间、一个想法，<br>或只是想认识一下？</p><a href="mailto:2823979989@qq.com">来聊聊吧 ↗</a></div>
+    <a class="contact-email reveal" href="mailto:2823979989@qq.com">2823979989@qq.com <span>↗</span></a>
+    <div class="contact-details reveal"><a href="tel:13805348315"><small>PHONE / WECHAT</small><strong>138 0534 8315</strong></a><div><small>BASED IN</small><strong>Shandong, China</strong></div><button type="button" data-copy="2823979989@qq.com"><small>ONE CLICK</small><strong>复制邮箱地址</strong></button></div>
+    <div class="footer-bottom"><a href="#home">↑ BACK TO TOP</a><p>© 2026 ZHU LIHONG. SPACE, BY DESIGN.</p><span>MADE WITH CARE</span></div>
+  </footer>
+
+  <button class="back-top" type="button" aria-label="回到顶部">↑</button>
+  <div class="toast" role="status" aria-live="polite">邮箱已复制</div>
+</body>
+</html>

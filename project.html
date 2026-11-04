@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="主立红空间设计作品详情。">
+  <meta name="theme-color" content="#fefefe">
+  <title>作品详情 · 主立红</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./cursor.js"></script>
+  <script type="module" src="./data.js"></script>
+  <script type="module" src="./project.js"></script>
+</head>
+<body class="project-body">
+  <a class="skip-link" href="#project-content">跳至作品详情</a>
+  <div class="site-grid" aria-hidden="true">
+    <i></i><i></i><i></i><i></i>
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <header class="site-header project-header">
+    <a class="brand" href="./index.html" aria-label="返回作品集首页">LIHONG<sup>®</sup></a>
+    <nav class="main-nav" aria-label="项目导航"><a href="./index.html#works">← PROJECT INDEX</a><a href="./index.html#about">ABOUT</a><a href="./index.html#contact">CONTACT ↗</a></nav>
+    <div class="header-meta"><span>LOCAL TIME</span><time id="local-time">CN 00:00:00</time></div>
+  </header>
+  <nav class="page-tabs" aria-label="页面快捷导航">
+    <a href="./index.html#about">ABOUT</a>
+    <a href="./index.html#works">WORKS</a>
+    <a href="./index.html#visual-notes">VISUAL</a>
+    <a href="./index.html#experience">EXPERIENCE</a>
+    <a href="./index.html#contact">CONTACT</a>
+  </nav>
+  <main class="project-main" id="project-content">
+    <div class="project-breadcrumb"><a href="./index.html#works">← SELECTED WORK / <b id="project-number">01</b></a><span id="project-category">INTERIOR SPACE</span></div>
+    <div class="project-hero-grid">
+      <div class="project-title-wrap reveal"><p class="project-kicker">PROJECT / <span id="project-year">2025</span></p><h1 id="project-title">中华小厨</h1><p class="project-subtitle" id="project-subtitle">餐饮空间设计</p><p class="project-english" id="project-english">Chinese Restaurant</p></div>
+      <div class="project-summary reveal"><p id="project-intro"></p><div class="project-tags" id="project-tags"></div><div class="project-specs"><div><small>DESIGN KEYWORDS</small><strong id="project-fact"></strong></div><div><small>PROJECT SCOPE</small><strong id="project-scope"></strong></div></div></div>
+    </div>
+    <button class="project-cover reveal" id="project-cover-button" type="button" aria-label="放大查看项目封面"><img id="project-cover" src="assets/img/extracted/project01-cover.jpg" alt="中华小厨项目封面"><span>CLICK TO ZOOM ＋</span></button>
+    <div class="project-cover-caption"><span>PROJECT COVER / PDF 01</span><span id="project-cover-number">01 — 06</span></div>
+    <div class="project-gallery-heading reveal"><div><span>[ EXTRACTED IMAGES ]</span><h2>图像与空间<span>。</span></h2></div><p>IMAGE / DETAIL / MATERIAL<br>点击图片可放大查看</p></div>
+    <div class="project-gallery" id="project-gallery"></div>
+    <nav class="project-pagination" aria-label="作品切换"><a id="project-prev" href="./project.html?work=06"><span aria-hidden="true">←</span><div><small>PREVIOUS PROJECT</small><strong id="project-prev-title">玄黑 · 彩梦</strong></div></a><a id="project-next" href="./project.html?work=02"><div><small>NEXT PROJECT</small><strong id="project-next-title">D&H 设计工作室</strong></div><span aria-hidden="true">→</span></a></nav>
+  </main>
+  <footer class="project-footer"><div class="section-shell"><span>© 2026 ZHU LIHONG. SPACE, BY DESIGN.</span><a href="./index.html#contact">GET IN TOUCH ↗</a></div></footer>
+  <button class="back-top" type="button" aria-label="回到顶部">↑</button>
+  <dialog class="lightbox" id="lightbox" aria-label="作品图片大图预览"><button class="lightbox-close" type="button" aria-label="关闭大图">CLOSE ×</button><button class="lightbox-nav lightbox-prev" type="button" aria-label="上一张图片">←</button><figure><img id="lightbox-image" src="" alt=""><figcaption id="lightbox-caption"></figcaption></figure><button class="lightbox-nav lightbox-next" type="button" aria-label="下一张图片">→</button></dialog>
+</body>
+</html>
