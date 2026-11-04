@@ -52,13 +52,25 @@ const loaderCount = document.querySelector('#loader-count');
 const loaderProgress = document.querySelector('#loader-progress');
 const loadDuration = reducedMotion ? 50 : 950;
 const loadStart = performance.now();
+// 首屏关键资源预加载：加载进度与真实下载绑定，100% 即完整呈现
+const preloadSources = ['assets/img/hero-island.png'];
+let loadedCount = 0;
+preloadSources.forEach((src) => {
+  const image = new Image();
+  image.onload = image.onerror = () => { loadedCount += 1; };
+  image.src = src;
+});
+const resourceRatio = () => (preloadSources.length ? loadedCount / preloadSources.length : 1);
+const loadDeadline = loadStart + 9000; // 网络异常时最多等 9 秒，避免永远卡住
 function updateLoader(now) {
-  const progress = Math.min((now - loadStart) / loadDuration, 1);
+  const timeProgress = Math.min((now - loadStart) / loadDuration, 1);
+  const resourceProgress = now >= loadDeadline ? 1 : resourceRatio();
+  const progress = Math.min(timeProgress, resourceProgress);
   const eased = 1 - Math.pow(1 - progress, 3);
   const percent = `${Math.round(eased * 100)}%`;
   loaderCount.textContent = percent;
   if (loaderProgress) loaderProgress.textContent = percent;
-  if (progress < 1) {
+  if (timeProgress < 1 || resourceProgress < 1) {
     requestAnimationFrame(updateLoader);
   } else {
     loader.classList.add('is-finished');
