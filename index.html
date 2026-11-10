@@ -33,26 +33,6 @@
     <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
   </div>
 
-  <header class="site-header">
-    <a class="brand" href="#home" aria-label="主立红作品集首页">LIHONG<sup>®</sup></a>
-    <nav class="main-nav" id="main-nav" aria-label="主导航">
-      <a href="#works">作品 <sup>06</sup></a>
-      <a href="#about">关于</a>
-      <a href="#experience">经历</a>
-      <a href="#contact">联系 ↗</a>
-    </nav>
-    <div class="header-meta"><span>LOCAL TIME</span><time id="local-time">CN 00:00:00</time></div>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav"><span>MENU</span><i></i></button>
-  </header>
-
-  <nav class="page-tabs" aria-label="页面快捷导航">
-    <a href="#about">ABOUT</a>
-    <a href="#works">WORKS</a>
-    <a href="#visual-notes">VISUAL</a>
-    <a href="#experience">EXPERIENCE</a>
-    <a href="#contact">CONTACT</a>
-  </nav>
-
   <main id="main">
     <section class="hero" id="home" aria-labelledby="hero-title">
       <div class="hero-grid-extra" aria-hidden="true">
@@ -87,6 +67,22 @@
       </div>
 
       <a class="scroll-cue hero-scroll" href="#about" aria-label="进入下一页"><span>WELCOME</span><i>↓</i></a>
+    </section>
+
+    <section class="categories" id="categories" aria-labelledby="categories-title">
+      <div class="categories-head reveal">
+        <h2 id="categories-title">INDEX</h2>
+        <p class="categories-cn">目录</p>
+        <p class="categories-desc">A table of contents — jump straight to the part you want to explore.</p>
+        <p class="categories-desc categories-desc-cn">五个部分：关于我、空间设计、平面和摄影、经历、联系我。</p>
+      </div>
+      <ul class="categories-list">
+        <li class="reveal"><a href="#about"><strong>ABOUT</strong><span>关于我 / 自我介绍</span></a></li>
+        <li class="reveal reveal-zoom"><a href="#works"><strong>SPACE DESIGN</strong><span>空间设计 / 六个空间作品</span></a></li>
+        <li class="reveal reveal-slide"><a href="#visual-notes"><strong>POSTER &amp; PHOTOGRAPHY</strong><span>平面和摄影 / 海报与镜头画面</span></a></li>
+        <li class="reveal reveal-zoom"><a href="#experience"><strong>EXPERIENCE</strong><span>经历 / 实习与在校经历</span></a></li>
+        <li class="reveal"><a href="#contact"><strong>CONTACT</strong><span>联系我 / 来聊聊吧</span></a></li>
+      </ul>
     </section>
 
     <section class="about section-pad" id="about" aria-labelledby="about-title">
@@ -140,12 +136,10 @@
 
     <dialog class="lens-dialog" id="lens-dialog" aria-labelledby="lens-title">
       <button class="lens-close" id="lens-close" type="button" aria-label="关闭作品预览">×</button>
-      <button class="lens-nav lens-prev" id="lens-prev" type="button" aria-label="上一件作品">←</button>
       <div class="lens-panel">
         <div class="lens-image-wrap"><img id="lens-image" src="assets/img/extracted/visual-01-bridge.jpg" alt="夜色中的桥与倒影"></div>
         <div class="lens-info"><span class="lens-category" id="lens-category">PHOTOGRAPHY</span><h2 id="lens-title">夜色 · 桥与倒影</h2><p id="lens-description">夜色中的铁路桥，灯光与水面倒影形成对称的节奏。</p><button class="lens-next-frame" id="lens-next-frame" type="button">NEXT FRAME <span>→</span></button></div>
       </div>
-      <button class="lens-nav lens-next" id="lens-next" type="button" aria-label="下一件作品">→</button>
       <div class="lens-counter" id="lens-counter">01 / 09 · USE ← → KEYS</div>
     </dialog>
 
@@ -153,9 +147,9 @@
       <div class="section-tag reveal"><span>/04</span><span>EXPERIENCE & PRACTICE</span></div>
       <div class="section-heading reveal"><div><h2 id="experience-title">在真实任务中生长</h2></div><p>设计、教学与项目统筹，<br>都是理解人与解决问题的方式。</p></div>
       <div class="experience-list">
-        <article class="experience-item reveal"><div class="experience-date"><time>2026.01 — 2026.09</time><span>CHONGQING / CN</span></div><div><h3>重庆启智分科技有限公司</h3><p class="experience-role">数学讲师</p></div><div class="experience-description"><p>独立负责线上课堂全流程，依据学员知识薄弱点定制单节课方案，累计交付 50+ 课时。</p><p>长期跟进学员状态，输出学情反馈并迭代课程内容，累计带教 3 名长期学员，其中 2 名完成续课。</p></div><span class="experience-index">01</span></article>
-        <article class="experience-item reveal"><div class="experience-date"><time>2025.04 — 2025.05</time><span>PROJECT LEAD</span></div><div><h3>白族非遗文化展馆</h3><p class="experience-role">项目组长</p></div><div class="experience-description"><p>带领 3 人小组完成从调研到方案设计的全流程，制定时间表并推进落地执行。</p><p>负责资料搜集、展陈概念提炼与跨模块协调，统一组员设计风格并把控最终交付质量。</p></div><span class="experience-index">02</span></article>
-        <article class="experience-item reveal"><div class="experience-date"><time>2025.01</time><span>INTERNSHIP</span></div><div><h3>同轩装修装饰工程有限公司</h3><p class="experience-role">室内设计师助理</p></div><div class="experience-description"><p>参与多个客户项目的方案设计，结合客户需求提供创意与建议，推动方案获得认可。</p><p>运用 SketchUp、Enscape 与 CAD 完成建模和效果图制作，累计出图 100+ 张，并跟进设计与施工衔接。</p></div><span class="experience-index">03</span></article>
+        <article class="experience-item reveal reveal-slide"><div class="experience-date"><time>2026.01 — 2026.09</time><span>CHONGQING / CN</span></div><div><h3>重庆启智分科技有限公司</h3><p class="experience-role">数学讲师</p></div><div class="experience-description"><p>独立负责线上课堂全流程，依据学员知识薄弱点定制单节课方案，累计交付 50+ 课时。</p><p>长期跟进学员状态，输出学情反馈并迭代课程内容，累计带教 3 名长期学员，其中 2 名完成续课。</p></div><span class="experience-index">01</span></article>
+        <article class="experience-item reveal reveal-slide"><div class="experience-date"><time>2025.04 — 2025.05</time><span>PROJECT LEAD</span></div><div><h3>白族非遗文化展馆</h3><p class="experience-role">项目组长</p></div><div class="experience-description"><p>带领 3 人小组完成从调研到方案设计的全流程，制定时间表并推进落地执行。</p><p>负责资料搜集、展陈概念提炼与跨模块协调，统一组员设计风格并把控最终交付质量。</p></div><span class="experience-index">02</span></article>
+        <article class="experience-item reveal reveal-slide"><div class="experience-date"><time>2025.01</time><span>INTERNSHIP</span></div><div><h3>同轩装修装饰工程有限公司</h3><p class="experience-role">室内设计师助理</p></div><div class="experience-description"><p>参与多个客户项目的方案设计，结合客户需求提供创意与建议，推动方案获得认可。</p><p>运用 SketchUp、Enscape 与 CAD 完成建模和效果图制作，累计出图 100+ 张，并跟进设计与施工衔接。</p></div><span class="experience-index">03</span></article>
       </div>
     </section>
   </main>
@@ -164,7 +158,7 @@
     <div class="section-tag reveal"><span>/05</span><span>REACH OUT TO ME</span></div>
     <h2 class="reveal" id="contact-title">LET’S SHAPE<br><span>REALITY.</span></h2>
     <div class="contact-intro reveal"><p>有一个空间、一个想法，<br>或只是想认识一下？</p><a href="mailto:2823979989@qq.com">来聊聊吧 ↗</a></div>
-    <a class="contact-email reveal" href="mailto:2823979989@qq.com">2823979989@qq.com <span>↗</span></a>
+    <a class="contact-email reveal reveal-zoom" href="mailto:2823979989@qq.com">2823979989@qq.com <span>↗</span></a>
     <div class="contact-details reveal"><a href="tel:13805348315"><small>PHONE / WECHAT</small><strong>138 0534 8315</strong></a><div><small>BASED IN</small><strong>Shandong, China</strong></div><button type="button" data-copy="2823979989@qq.com"><small>ONE CLICK</small><strong>复制邮箱地址</strong></button></div>
     <div class="footer-bottom"><a href="#home">↑ BACK TO TOP</a><p>© 2026 ZHU LIHONG. SPACE, BY DESIGN.</p><span>MADE WITH CARE</span></div>
   </footer>

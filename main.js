@@ -76,8 +76,31 @@ function updateLoader(now) {
     loader.classList.add('is-finished');
     document.body.classList.remove('is-loading');
     if (documentRoot.classList.contains('hero-locked')) window.scrollTo(0, 0);
+    startHeroTypewriter();
     setTimeout(() => loader.remove(), 850);
   }
+}
+
+// 首屏标题打字机动效：300ms 延迟启动，45ms/字，竖条光标完成后保留
+const heroTitle = document.querySelector('#hero-title');
+function startHeroTypewriter() {
+  if (!heroTitle || reducedMotion) return;
+  const fullText = heroTitle.textContent.trim();
+  if (!fullText) return;
+  let index = 0;
+  heroTitle.textContent = '';
+  heroTitle.classList.add('is-typing');
+  const typeNext = () => {
+    index += 1;
+    heroTitle.textContent = fullText.slice(0, index);
+    if (index < fullText.length) {
+      setTimeout(typeNext, 45);
+    } else {
+      heroTitle.classList.remove('is-typing');
+      heroTitle.classList.add('is-typed');
+    }
+  };
+  setTimeout(typeNext, 300);
 }
 requestAnimationFrame(updateLoader);
 
@@ -127,21 +150,23 @@ if (backTop) {
 }
 const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.main-nav');
-function closeMenu() {
-  nav.classList.remove('is-open');
-  menuButton.setAttribute('aria-expanded', 'false');
-  document.body.style.overflow = '';
+if (menuButton && nav) {
+  const closeMenu = () => {
+    nav.classList.remove('is-open');
+    menuButton.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
+  menuButton.addEventListener('click', () => {
+    const open = menuButton.getAttribute('aria-expanded') === 'true';
+    menuButton.setAttribute('aria-expanded', String(!open));
+    nav.classList.toggle('is-open', !open);
+    document.body.style.overflow = open ? '' : 'hidden';
+  });
+  nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && nav.classList.contains('is-open')) closeMenu();
+  });
 }
-menuButton.addEventListener('click', () => {
-  const open = menuButton.getAttribute('aria-expanded') === 'true';
-  menuButton.setAttribute('aria-expanded', String(!open));
-  nav.classList.toggle('is-open', !open);
-  document.body.style.overflow = open ? '' : 'hidden';
-});
-nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && nav.classList.contains('is-open')) closeMenu();
-});
 
 const visualWorks = [
   { src: 'assets/img/extracted/visual-01-bridge.jpg', title: '夜色 · 桥与倒影', label: 'NIGHT BRIDGE', category: 'PHOTOGRAPHY', year: '2025', w: 1237, h: 2200, description: '夜色中的铁路桥，灯光与水面倒影形成对称的节奏。', alt: '夜色中的铁路桥与水面倒影摄影' },
@@ -183,12 +208,76 @@ function mountLensCursor(inDialog) {
   target.append(cursorRing, cursorDot);
 }
 
-function openLens(index) {
+let activeTrigger = null;
+let lensMorphing = false;
+
+function getMorphPoints() {
+  const fromElement = activeTrigger?.querySelector('img') || activeTrigger;
+  if (!fromElement) return null;
+  const from = fromElement.getBoundingClientRect();
+  const to = lensDialog.getBoundingClientRect();
+  if (!from.width || !to.width) return null;
+  return {
+    dx: from.left + from.width / 2 - (to.left + to.width / 2),
+    dy: from.top + from.height / 2 - (to.top + to.height / 2),
+    sx: Math.max(from.width / to.width, 0.04),
+    sy: Math.max(from.height / to.height, 0.04)
+  };
+}
+
+function openLens(index, trigger) {
+  if (lensMorphing) return;
   renderLens(index);
+  activeTrigger = trigger || null;
   document.body.classList.add('lens-open');
   documentRoot.classList.add('cursor-lens');
   lensDialog.showModal();
   mountLensCursor(true);
+  if (reducedMotion || !activeTrigger) return;
+  const points = getMorphPoints();
+  if (!points) return;
+  lensMorphing = true;
+  lensDialog.classList.add('is-morphing');
+  const animation = lensDialog.animate([
+    { transform: `translate(${points.dx}px, ${points.dy}px) scale(${points.sx}, ${points.sy})` },
+    { transform: 'translate(0px, 0px) scale(1, 1)' }
+  ], { duration: 420, easing: 'cubic-bezier(.32,.72,0,1)' });
+  animation.finished.then(() => {
+    lensDialog.classList.remove('is-morphing');
+    lensMorphing = false;
+  }).catch(() => {
+    lensDialog.classList.remove('is-morphing');
+    lensMorphing = false;
+  });
+}
+
+function closeLens() {
+  if (lensMorphing) return;
+  if (reducedMotion || !activeTrigger) {
+    lensDialog.close();
+    return;
+  }
+  const points = getMorphPoints();
+  if (!points) {
+    lensDialog.close();
+    return;
+  }
+  lensMorphing = true;
+  lensDialog.classList.add('is-morphing');
+  const animation = lensDialog.animate([
+    { transform: 'translate(0px, 0px) scale(1, 1)' },
+    { transform: `translate(${points.dx}px, ${points.dy}px) scale(${points.sx}, ${points.sy})` }
+  ], { duration: 340, easing: 'cubic-bezier(.32,.72,0,1)' });
+  animation.finished.then(() => {
+    lensDialog.close();
+    lensDialog.getAnimations().forEach((item) => item.cancel());
+    lensDialog.classList.remove('is-morphing');
+    lensMorphing = false;
+  }).catch(() => {
+    lensDialog.close();
+    lensDialog.classList.remove('is-morphing');
+    lensMorphing = false;
+  });
 }
 
 function createVisualCard(item, index) {
@@ -198,7 +287,7 @@ function createVisualCard(item, index) {
   card.dataset.workIndex = String(index);
   card.setAttribute('aria-label', `查看作品：${item.title}`);
   card.innerHTML = `<span class="visual-folder"><span class="visual-card-image"><img src="${item.src}" alt="${item.alt}" width="${item.w}" height="${item.h}" loading="lazy"></span></span><span class="visual-card-meta"><span>${String(index + 1).padStart(2, '0')} / ${item.label}</span><span>${item.year}</span></span><span class="visual-card-title">${item.title}</span>`;
-  card.addEventListener('click', () => openLens(index));
+  card.addEventListener('click', () => openLens(index, card));
   return card;
 }
 
@@ -221,44 +310,53 @@ visualRow.appendChild(visualTrack);
 visualGrid.appendChild(visualRow);
 
 if (!reducedMotion) {
+  // InfiniteSlider 行为：基础速度 40px/s，悬停平滑降速至 20px/s，不停止滚动
+  const sliderSpeed = 40;
+  const sliderHoverSpeed = 20;
   let visualOffset = 0;
-  let visualPaused = false;
+  let visualVelocity = sliderSpeed;
+  let visualTarget = sliderSpeed;
+  let visualHovering = false;
+  let visualFocused = false;
   let lastFrameTime = performance.now();
 
-  const pauseVisual = () => { visualPaused = true; };
-  const resumeVisual = () => { visualPaused = false; };
-  visualTrack.addEventListener('mouseenter', pauseVisual);
-  visualTrack.addEventListener('mouseleave', resumeVisual);
-  visualTrack.addEventListener('focusin', pauseVisual);
-  visualTrack.addEventListener('focusout', resumeVisual);
+  const updateSliderTarget = () => {
+    visualTarget = visualFocused ? 0 : visualHovering ? sliderHoverSpeed : sliderSpeed;
+  };
+  visualTrack.addEventListener('mouseenter', () => { visualHovering = true; updateSliderTarget(); });
+  visualTrack.addEventListener('mouseleave', () => { visualHovering = false; updateSliderTarget(); });
+  visualTrack.addEventListener('focusin', () => { visualFocused = true; updateSliderTarget(); });
+  visualTrack.addEventListener('focusout', () => { visualFocused = false; updateSliderTarget(); });
 
   const slideVisual = (now) => {
     const delta = Math.min(now - lastFrameTime, 50);
     lastFrameTime = now;
-    if (!visualPaused) {
-      visualOffset -= delta * 0.03;
-      const firstCard = visualTrack.firstElementChild;
-      if (firstCard) {
-        const cardGap = Number.parseFloat(getComputedStyle(visualTrack).columnGap) || 0;
-        const cardStep = firstCard.getBoundingClientRect().width + cardGap;
-        if (cardStep > 0 && visualOffset <= -cardStep) {
-          visualOffset += cardStep;
-          visualTrack.appendChild(firstCard);
-        }
+    // 速度弹簧：目标速度变化时平滑过渡，模拟 useSpring 的缓入缓出
+    visualVelocity += (visualTarget - visualVelocity) * Math.min(delta / 180, 1);
+    visualOffset -= visualVelocity * (delta / 1000);
+    const firstCard = visualTrack.firstElementChild;
+    if (firstCard) {
+      const cardGap = Number.parseFloat(getComputedStyle(visualTrack).columnGap) || 0;
+      const cardStep = firstCard.getBoundingClientRect().width + cardGap;
+      if (cardStep > 0 && visualOffset <= -cardStep) {
+        visualOffset += cardStep;
+        visualTrack.appendChild(firstCard);
       }
-      visualTrack.style.transform = `translate3d(${visualOffset}px, 0, 0)`;
     }
+    visualTrack.style.transform = `translate3d(${visualOffset}px, 0, 0)`;
     requestAnimationFrame(slideVisual);
   };
   requestAnimationFrame(slideVisual);
 }
 
-document.querySelector('#lens-close').addEventListener('click', () => lensDialog.close());
-document.querySelector('#lens-prev').addEventListener('click', () => renderLens(activeVisual - 1));
-document.querySelector('#lens-next').addEventListener('click', () => renderLens(activeVisual + 1));
+document.querySelector('#lens-close').addEventListener('click', closeLens);
 document.querySelector('#lens-next-frame').addEventListener('click', () => renderLens(activeVisual + 1));
 lensDialog.addEventListener('click', (event) => {
-  if (event.target === lensDialog) lensDialog.close();
+  if (event.target === lensDialog) closeLens();
+});
+lensDialog.addEventListener('cancel', (event) => {
+  event.preventDefault();
+  closeLens();
 });
 lensDialog.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowLeft') { event.preventDefault(); renderLens(activeVisual - 1); }
@@ -269,14 +367,11 @@ lensDialog.addEventListener('close', () => {
   mountLensCursor(false);
 });
 
-const revealObserver = new IntersectionObserver((entries, observer) => {
+const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
-      observer.unobserve(entry.target);
-    }
+    entry.target.classList.toggle('is-visible', entry.isIntersecting);
   });
-}, { threshold: 0.07, rootMargin: '0px 0px -25px' });
+}, { threshold: 0, rootMargin: '0px 0px -350px 0px' });
 document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
 
 const navSections = ['about', 'works', 'visual-notes', 'experience', 'contact'];
