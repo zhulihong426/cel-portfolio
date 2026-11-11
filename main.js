@@ -102,6 +102,71 @@ function startHeroTypewriter() {
   };
   setTimeout(typeNext, 300);
 }
+
+// 猴子头像：按 assets/data/monkey.json 渲染，眼睛跟随鼠标，无指针时自动游移
+async function mountMonkey() {
+  const host = document.querySelector('#monkey-avatar');
+  if (!host || host.dataset.ready) return;
+  let spec = null;
+  try {
+    spec = await fetch('./assets/data/monkey.json').then((response) => response.json());
+  } catch (error) {
+    return;
+  }
+  if (!spec || !spec.body || !spec.eyes) return;
+  const eye = spec.eyes;
+  const centers = [eye.x - eye.spacing / 2, eye.x + eye.spacing / 2];
+  const socketR = 7.4 * eye.scale;
+  const pupilR = 3.4 * eye.scale;
+  host.innerHTML = `
+    <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      <path d="${spec.body.path}" fill="#c98a4b" stroke="#171815" stroke-width="1.6" stroke-linejoin="round"/>
+      ${centers.map((cx) => `
+        <g transform="translate(${cx} ${eye.y})">
+          <circle r="${socketR}" fill="#fdfbf6" stroke="#171815" stroke-width="1.6"/>
+          <g class="monkey-blink"><circle class="monkey-pupil" r="${pupilR}" fill="#171815"/></g>
+        </g>`).join('')}
+    </svg>
+    <figcaption class="monkey-tag">EYES FOLLOW YOU</figcaption>`;
+  host.dataset.ready = 'true';
+  if (reducedMotion) return;
+  const pupils = [...host.querySelectorAll('.monkey-pupil')];
+  const svg = host.querySelector('svg');
+  const maxOffset = (socketR - pupilR) * 0.62;
+  let pointerX = null;
+  let pointerY = null;
+  let lastMove = 0;
+  window.addEventListener('mousemove', (event) => {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    lastMove = performance.now();
+  }, { passive: true });
+  const updateEyes = (now) => {
+    const box = svg.getBoundingClientRect();
+    if (box.width) {
+      let targetX;
+      let targetY;
+      if (pointerX !== null && now - lastMove < 2600) {
+        targetX = pointerX - (box.left + box.width / 2);
+        targetY = pointerY - (box.top + box.height / 2);
+      } else {
+        targetX = Math.cos(now / 1400) * 170;
+        targetY = Math.sin(now / 1900) * 90;
+      }
+      const distance = Math.hypot(targetX, targetY) || 1;
+      const ratio = Math.min(distance / 90, 1);
+      const dx = (targetX / distance) * maxOffset * ratio;
+      const dy = (targetY / distance) * maxOffset * ratio;
+      pupils.forEach((pupilEl) => {
+        pupilEl.setAttribute('cx', dx.toFixed(2));
+        pupilEl.setAttribute('cy', dy.toFixed(2));
+      });
+    }
+    requestAnimationFrame(updateEyes);
+  };
+  requestAnimationFrame(updateEyes);
+}
+mountMonkey();
 requestAnimationFrame(updateLoader);
 
 function updateTime() {

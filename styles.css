@@ -176,6 +176,13 @@ a.hero-note:hover { color: var(--red); }
 .intro-mark { justify-self: end; color: var(--red); font-size: 110px; line-height: .8; animation: slow-spin 20s linear infinite; }
 @keyframes slow-spin { to { transform: rotate(360deg); } }
 
+.intro-monkey { position: absolute; right: max(24px, 3vw); bottom: 30px; width: 118px; margin: 0; display: grid; gap: 9px; justify-items: center; }
+.intro-monkey svg { display: block; width: 100%; height: auto; filter: drop-shadow(4px 4px 0 rgba(23, 24, 21, .16)); }
+.monkey-tag { padding: 4px 8px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); font-family: var(--mono); font-size: 7px; letter-spacing: .08em; box-shadow: 3px 3px 0 rgba(23, 24, 21, .14); white-space: nowrap; }
+.monkey-blink { transform-box: fill-box; transform-origin: center; animation: monkey-blink 4.4s infinite; }
+@keyframes monkey-blink { 0%, 91%, 98%, 100% { transform: scaleY(1); } 94% { transform: scaleY(.08); } }
+@media (prefers-reduced-motion: reduce) { .monkey-blink { animation: none; } }
+
 .works { background: transparent; }
 .works-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin: 70px 0 90px; }
 .works-heading h2 { margin: 0; font-size: clamp(64px, 9vw, 138px); font-weight: 400; line-height: .86; letter-spacing: -.085em; }
@@ -267,7 +274,7 @@ body.lens-open { overflow: hidden; }
 }
 .lens-counter { position: absolute; right: 0; bottom: -32px; left: 0; color: #777; font-family: var(--mono); font-size: 7px; letter-spacing: .08em; text-align: center; }
 
-.categories { position: relative; min-height: 100svh; display: grid; grid-template-columns: 260px 1fr; align-items: center; gap: 50px; padding: 110px max(24px, 3vw); background: transparent; }
+.categories { position: relative; min-height: 100svh; display: grid; grid-template-columns: 260px 1fr; align-items: center; gap: 50px; padding: 110px max(24px, 3vw); background: transparent; overflow-x: clip; }
 .categories-head h2 { margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
 .categories-cn { margin: 4px 0 30px; font-size: 19px; font-weight: 600; }
 .categories-desc { max-width: 230px; margin: 0 0 12px; color: rgba(23, 24, 21, .5); font-size: 10px; line-height: 1.8; }
@@ -478,6 +485,7 @@ body.lens-open { overflow: hidden; }
   .intro-title { margin: 55px 0 65px; font-size: 16.5vw; }
   .intro-grid { grid-template-columns: 1fr; gap: 35px; }
   .intro-mark { position: absolute; right: 20px; bottom: 65px; font-size: 70px; opacity: .2; }
+  .intro-monkey { position: static; width: 96px; margin: 0 auto; }
   .works-heading { display: block; margin: 50px 0 55px; }
   .works-heading h2 { font-size: 16vw; }
   .works-heading p { margin-top: 28px; }
