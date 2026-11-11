@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "vite": "^6.1.0"
+  },
+  "dependencies": {
+    "open-bot-avatar": "^0.2.1"
   }
 }

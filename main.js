@@ -1,3 +1,6 @@
+import { validateAvatar } from 'open-bot-avatar';
+import { mountAvatar } from 'open-bot-avatar/dom';
+
 const works = window.PORTFOLIO_WORKS || [];
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const documentRoot = document.documentElement;
@@ -103,70 +106,78 @@ function startHeroTypewriter() {
   setTimeout(typeNext, 300);
 }
 
-// 猴子头像：按 assets/data/monkey.json 渲染，眼睛跟随鼠标，无指针时自动游移
-async function mountMonkey() {
+// 灯泡头像：open-bot-avatar 官方渲染器（内置自动眨眼、待机浮动、体积与眼神跟随）
+const BULB_OFF = '#4a4a4a';
+const BULB_ON = '#fdf3c7';
+let botInstance = null;
+let bulbLit = false;
+let currentBulb = null;
+let colorFrame = null;
+const hexRgb = (hex) => [1, 3, 5].map((i) => Number.parseInt(hex.slice(i, i + 2), 16));
+async function mountBot() {
   const host = document.querySelector('#monkey-avatar');
   if (!host || host.dataset.ready) return;
   let spec = null;
   try {
-    spec = await fetch('./assets/data/monkey.json').then((response) => response.json());
+    spec = await fetch('./assets/data/lightbulb.json').then((response) => response.json());
   } catch (error) {
     return;
   }
-  if (!spec || !spec.body || !spec.eyes) return;
-  const eye = spec.eyes;
-  const centers = [eye.x - eye.spacing / 2, eye.x + eye.spacing / 2];
-  const socketR = 7.4 * eye.scale;
-  const pupilR = 3.4 * eye.scale;
-  host.innerHTML = `
-    <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-      <path d="${spec.body.path}" fill="#c98a4b" stroke="#171815" stroke-width="1.6" stroke-linejoin="round"/>
-      ${centers.map((cx) => `
-        <g transform="translate(${cx} ${eye.y})">
-          <circle r="${socketR}" fill="#fdfbf6" stroke="#171815" stroke-width="1.6"/>
-          <g class="monkey-blink"><circle class="monkey-pupil" r="${pupilR}" fill="#171815"/></g>
-        </g>`).join('')}
-    </svg>
-    <figcaption class="monkey-tag">EYES FOLLOW YOU</figcaption>`;
+  const validated = validateAvatar(spec);
+  if (!validated.ok) return;
+  const definition = validated.value;
+  definition.eyes.scale = 0.9;
   host.dataset.ready = 'true';
-  if (reducedMotion) return;
-  const pupils = [...host.querySelectorAll('.monkey-pupil')];
-  const svg = host.querySelector('svg');
-  const maxOffset = (socketR - pupilR) * 0.62;
-  let pointerX = null;
-  let pointerY = null;
-  let lastMove = 0;
-  window.addEventListener('mousemove', (event) => {
-    pointerX = event.clientX;
-    pointerY = event.clientY;
-    lastMove = performance.now();
-  }, { passive: true });
-  const updateEyes = (now) => {
-    const box = svg.getBoundingClientRect();
-    if (box.width) {
-      let targetX;
-      let targetY;
-      if (pointerX !== null && now - lastMove < 2600) {
-        targetX = pointerX - (box.left + box.width / 2);
-        targetY = pointerY - (box.top + box.height / 2);
-      } else {
-        targetX = Math.cos(now / 1400) * 170;
-        targetY = Math.sin(now / 1900) * 90;
-      }
-      const distance = Math.hypot(targetX, targetY) || 1;
-      const ratio = Math.min(distance / 90, 1);
-      const dx = (targetX / distance) * maxOffset * ratio;
-      const dy = (targetY / distance) * maxOffset * ratio;
-      pupils.forEach((pupilEl) => {
-        pupilEl.setAttribute('cx', dx.toFixed(2));
-        pupilEl.setAttribute('cy', dy.toFixed(2));
-      });
-    }
-    requestAnimationFrame(updateEyes);
-  };
-  requestAnimationFrame(updateEyes);
+  botInstance = mountAvatar(host, {
+    definition,
+    color: bulbLit ? BULB_ON : BULB_OFF,
+    mood: 'happy',
+    followPointer: true,
+    depth: 6,
+    label: '眼睛跟随鼠标的灯泡头像',
+  });
+  currentBulb = hexRgb(bulbLit ? BULB_ON : BULB_OFF);
 }
-mountMonkey();
+// 点击灯泡：开灯（暖黄 + 光晕 + 页面转黑）/ 关灯（暗灰 + 页面转白），可反复切换
+const bulbHost = document.querySelector('#monkey-avatar');
+const bulbFigure = document.querySelector('.intro-monkey');
+function tweenBulbColor(targetHex) {
+  cancelAnimationFrame(colorFrame);
+  const from = currentBulb.slice();
+  const to = hexRgb(targetHex);
+  const start = performance.now();
+  const step = (now) => {
+    const t = Math.min((now - start) / 600, 1);
+    const eased = t < .5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+    currentBulb = from.map((v, i) => v + (to[i] - v) * eased);
+    if (botInstance) botInstance.update({ color: `rgb(${currentBulb.map((v) => Math.round(v)).join(', ')})` });
+    if (t < 1) colorFrame = requestAnimationFrame(step);
+  };
+  colorFrame = requestAnimationFrame(step);
+}
+function toggleBulb() {
+  bulbLit = !bulbLit;
+  documentRoot.classList.toggle('lights-on', bulbLit);
+  if (bulbFigure) {
+    bulbFigure.classList.toggle('is-lit', bulbLit);
+    bulbFigure.setAttribute('aria-pressed', String(bulbLit));
+  }
+  if (currentBulb) tweenBulbColor(bulbLit ? BULB_ON : BULB_OFF);
+}
+if (bulbHost && bulbFigure) {
+  bulbFigure.setAttribute('role', 'button');
+  bulbFigure.setAttribute('tabindex', '0');
+  bulbFigure.setAttribute('aria-pressed', 'false');
+  bulbFigure.setAttribute('aria-label', '开灯 / 关灯');
+  bulbHost.addEventListener('click', toggleBulb);
+  bulbFigure.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      toggleBulb();
+    }
+  });
+}
+mountBot();
 requestAnimationFrame(updateLoader);
 
 function updateTime() {
@@ -437,7 +448,29 @@ const revealObserver = new IntersectionObserver((entries) => {
     entry.target.classList.toggle('is-visible', entry.isIntersecting);
   });
 }, { threshold: 0, rootMargin: '0px 0px -350px 0px' });
-document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+document.querySelectorAll('.reveal:not(.work-row)').forEach((element) => revealObserver.observe(element));
+
+// 作品目录整组快速进场：列表进入视口后按 70ms 间隔依次浮现，约 0.6s 全部完成
+const workRows = [...document.querySelectorAll('.work-row')];
+const workListEl = document.querySelector('.work-list');
+if (workListEl && workRows.length) {
+  const workListObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        workRows.forEach((row, index) => {
+          row.style.transitionDelay = `${index * 70}ms`;
+          row.classList.add('is-visible');
+        });
+      } else {
+        workRows.forEach((row) => {
+          row.style.transitionDelay = '0ms';
+          row.classList.remove('is-visible');
+        });
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+  workListObserver.observe(workListEl);
+}
 
 const navSections = ['about', 'works', 'visual-notes', 'experience', 'contact'];
 const navObserver = new IntersectionObserver((entries) => {
