@@ -253,7 +253,8 @@ const visualWorks = [
   { src: 'assets/img/extracted/visual-06-kashgar.jpg', title: '大美新疆 · 喀什', label: 'KASHGAR', category: 'CITY POSTER', year: '2024', w: 1555, h: 2200, description: '喀什古城与昆仑塔，几何框架中的城市旅行叙事。', alt: '大美新疆喀什城市旅行海报' },
   { src: 'assets/img/extracted/visual-07-towers.jpg', title: '双城地标', label: 'TWO TOWERS', category: 'CITY POSTER', year: '2024', w: 1555, h: 2200, description: '哈尔滨龙塔与东方明珠并置，讨论两座城市的地标记忆。', alt: '哈尔滨龙塔与上海东方明珠城市海报' },
   { src: 'assets/img/extracted/visual-08-singer.jpg', title: '艺苑好声音', label: 'CAMPUS SINGER', category: 'EVENT POSTER', year: '2024', w: 762, h: 2000, description: '校园十佳歌手大赛主视觉，以明快色彩和人物插画构成。', alt: '艺苑好声音校园歌手大赛海报' },
-  { src: 'assets/img/extracted/visual-09-race.jpg', title: '燃动青春', label: 'TEAM CHALLENGE', category: 'EVENT POSTER', year: '2025', w: 900, h: 383, description: '多人多足挑战赛海报，用运动场景与暖色块组织信息。', alt: '燃动青春多人多足挑战赛海报' }
+  { src: 'assets/img/extracted/visual-09-race.jpg', title: '燃动青春', label: 'TEAM CHALLENGE', category: 'EVENT POSTER', year: '2025', w: 900, h: 383, description: '多人多足挑战赛海报，用运动场景与暖色块组织信息。', alt: '燃动青春多人多足挑战赛海报' },
+  { src: 'assets/img/extracted/visual-10-calla-lily.jpg', title: '马蹄莲 · CALLA LILY', label: 'CALLA LILY', category: 'FLOWER POSTER', year: '2026', w: 1424, h: 2000, description: '马蹄莲花卉海报，喷绘笔触与柔粉色块烘托白色花姿的纯净。', alt: '马蹄莲花卉海报，白色花朵与绿粉喷绘色块' }
 ];
 
 const visualGrid = document.querySelector('#visual-grid');
